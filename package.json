@@ -1,0 +1,29 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "mus shop",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend/mus-shop",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Komakino-joy/ProShop.git"
+  },
+  "author": "Bryan Alvarez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Komakino-joy/ProShop/issues"
+  },
+  "homepage": "https://github.com/Komakino-joy/ProShop#readme",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.1.0",
+    "nodemon": "^2.0.7"
+  }
+}

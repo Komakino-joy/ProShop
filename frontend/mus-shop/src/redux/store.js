@@ -1,10 +1,8 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-const rootReducer = combineReducers({
-
-});
+import rootReducer from './root.reducer';
 
 const initialState = {};
 

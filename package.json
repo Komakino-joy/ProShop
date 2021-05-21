@@ -6,7 +6,9 @@
   "scripts": {
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend/mus-shop",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "repository": {
     "type": "git",
@@ -19,10 +21,17 @@
   },
   "homepage": "https://github.com/Komakino-joy/ProShop#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "concurrent": "^0.3.2",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
-    "mongoose": "^5.12.9"
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.12.9",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^6.1.0",

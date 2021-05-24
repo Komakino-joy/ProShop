@@ -1,10 +1,17 @@
 import ProductActionTypes from './product.types';
 
-const INITIAL_STATE = {
+const PRODUCT_LIST_INITIAL_STATE = {
     products: [],
+    error: null
 };
 
-export const productListReducer = (state = INITIAL_STATE, action) => {
+const PRODUCT_DETAILS_INITIAL_STATE = {
+    product: null,
+    reviews: [],
+    error: null
+};
+
+export const productListReducer = (state = PRODUCT_LIST_INITIAL_STATE, action) => {
     switch(action.type) {
         case ProductActionTypes.PRODUCT_LIST_REQUEST:
             return {
@@ -22,7 +29,32 @@ export const productListReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                payload: action.payload,
+                error: action.payload,
+            }
+        default:
+            return state;
+    };
+};
+
+export const productDetailsReducer = (state = PRODUCT_DETAILS_INITIAL_STATE, action) => {
+    switch(action.type) {
+        case ProductActionTypes.PRODUCT_DETAILS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                product: null,
+            }
+        case ProductActionTypes.PRODUCT_DETAILS_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                product: action.payload
+            }
+        case ProductActionTypes.PRODUCT_DETAILS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
             }
         default:
             return state;

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import ProductActionTypes from './product.types';
 
-
 export const listProducts = () => async (dispatch) => {
     try {
         dispatch({
@@ -17,6 +16,28 @@ export const listProducts = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: ProductActionTypes.PRODUCT_LIST_FAILURE,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message
+            : error.message,
+        });
+    };
+};
+
+export const listProductDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_DETAILS_REQUEST
+        });
+
+        const { data } = await axios.get(`/api/products/${id}`)
+
+        dispatch({
+            type: ProductActionTypes.PRODUCT_DETAILS_SUCCESS,
+            payload: data,
+        })
+    } catch (error) {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_DETAILS_FAILURE,
             payload: error.response && error.response.data.message 
             ? error.response.data.message
             : error.message,

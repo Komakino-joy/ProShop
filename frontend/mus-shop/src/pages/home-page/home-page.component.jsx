@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
-import Product from '../../components/product/product.component';
+
 import { listProducts } from '../../redux/product/product.actions'
+
+import Product from '../../components/product/product.component';
+import Loader from '../../components/loader/loader.component';
+import Message from '../../components/message/message.component';
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -16,7 +20,7 @@ const HomePage = () => {
     return (
         <>
             <h1>Latest Products</h1>
-            {loading ? <h2>Loading...</h2> : error ? <h3>{error}</h3> :
+            {loading ? <Loader>Loading...</Loader> : error ? <Message variant='danger'>{error}</Message> :
             <Row>
                 {
                     products.map((product) => (

@@ -3,13 +3,17 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const errorMiddleware = require('./middleware/error.middleware');
 const connectDB = require('./config/db');
+
 const productRoutes = require('./routes/product.routes');
+const userRoutes = require('./routes/user.routes');
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
+app.use(express.json());
+
 const PORT = process.env.PORT || 5010
 
 
@@ -18,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // return invalid route middleware
 app.use(errorMiddleware.notFound);

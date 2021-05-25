@@ -8,6 +8,7 @@ import Footer from './components/footer/footer.component';
 import HomePage from './pages/home-page/home-page.component'
 import ProductPage from './pages/product-page/product-page.component';
 import CartPage from './pages/cart-page/cart-page';
+import LoginPage from './pages/login-page/login-page.component';
 
 const App = () => {
   return (
@@ -15,9 +16,10 @@ const App = () => {
       <Header/>
         <main className='pa-3'>
         <Container>
-          <Route exact path='/' component={HomePage}  />
-          <Route path='/product/:productId' component={ProductPage}  />
-          <Route path='/cart/:productId?' component={CartPage}  />
+        <Route path='/login' component={LoginPage} />
+          <Route path='/product/:productId' component={ProductPage} />
+          <Route path='/cart/:productId?' component={CartPage} />
+          <Route exact path='/' component={HomePage} />
         </Container>
         </main>
       <Footer/>

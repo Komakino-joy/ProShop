@@ -7,7 +7,6 @@ const User = require('../models/user.model');
 // @route           POST /api/users/login
 // @access          Public
 const authuser = asyncHandler(async (req, res) => {
-    console.log(req.body)
     const { email, password } = req.body
 
     const user = await User.findOne({ email })

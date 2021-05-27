@@ -57,6 +57,7 @@ const LoginPage = ({ location, history }) => {
                 <Button 
                     type='submit' 
                     variant='primary'
+                    className='my-3'
                 >
                     Sign In
                 </Button>

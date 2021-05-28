@@ -13,6 +13,8 @@ import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import ShippingPage from './pages/shipping-page/shipping-page.component';
 import PaymentMethodPage from './pages/payment-method/payment-method.component';
+import PlaceOrderPage from './pages/place-order-page/place-order-page.component';
+import OrderPage from './pages/order-page/order-page.component';
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
           <Route path='/cart/:productId?' component={CartPage} />
           <Route path='/shipping' component={ShippingPage} />
           <Route path='/payment' component={PaymentMethodPage} />
+          <Route path='/placeorder' component={PlaceOrderPage} />
+          <Route path='/order/:id' component={OrderPage} />
           <Route exact path='/' component={HomePage} />
         </Container>
         </main>

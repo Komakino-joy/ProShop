@@ -2,11 +2,15 @@ import UserActionTypes from './user.types'
 const INITIAL_STATE = {
     loading: false,
     success: false,
-}
+};
 
 const INITIAL_DETAILS_STATE = {
-    user: {}
-}
+    user: {},
+};
+
+const INITIAL_USER_STATE = {
+    users: [],
+};
 
 export const userLoginReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
@@ -77,6 +81,13 @@ export const userDetailsReducer = (state = INITIAL_DETAILS_STATE, action) => {
                 loading: false,
                 error: action.payload,
             }
+
+        case UserActionTypes.USER_DETAILS_RESET:
+            return {
+                ...state,
+                user: {},
+            }
+
         default:
             return state;
     };
@@ -99,6 +110,36 @@ export const userUpdateProfileReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
+                error: action.payload,
+            }
+        default:
+            return state;
+    };
+};
+
+export const userListReducer = (state = INITIAL_USER_STATE, action) => {
+    switch(action.type) {
+        case UserActionTypes.USER_LIST_REQUEST:
+            return {
+                loading: true,
+            }
+        case UserActionTypes.USER_LIST_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                users: action.payload
+            }
+        case UserActionTypes.USER_LIST_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            }
+
+        case UserActionTypes.USER_LIST_RESET:
+            return {
+                ...state,
+                users: [],
                 error: action.payload,
             }
         default:

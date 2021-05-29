@@ -112,6 +112,12 @@ export const orderListMyReducer = (state = INITIAL_STATE_ORDER_LIST_MY, action) 
                 error: action.payload
             };
 
+        case OrderActionTypes.ORDER_LIST_MY_RESET:
+            return {
+                ...state,
+                orders: []
+            };
+
         default:
             return state
     };

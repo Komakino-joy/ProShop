@@ -15,6 +15,7 @@ import ShippingPage from './pages/shipping-page/shipping-page.component';
 import PaymentMethodPage from './pages/payment-method/payment-method.component';
 import PlaceOrderPage from './pages/place-order-page/place-order-page.component';
 import OrderPage from './pages/order-page/order-page.component';
+import UserListPage from './pages/user-list-page/user-list-page.component';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
       <Header/>
         <main className='pa-3'>
         <Container>
+          <Route exact path='/' component={HomePage} />
           <Route path='/login' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />
           <Route path='/profile' component={ProfilePage} />
@@ -31,7 +33,7 @@ const App = () => {
           <Route path='/payment' component={PaymentMethodPage} />
           <Route path='/placeorder' component={PlaceOrderPage} />
           <Route path='/order/:id' component={OrderPage} />
-          <Route exact path='/' component={HomePage} />
+          <Route path='/admin/userlist' component={UserListPage} />
         </Container>
         </main>
       <Footer/>

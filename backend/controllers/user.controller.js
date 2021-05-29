@@ -77,6 +77,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
 });
 
+// @description     Get all users
+// @route           GET /api/users
+// @access          Private/Admin
+const getUsers = asyncHandler(async (req, res) => {
+    const users = await User.find({});
+    res.json(users);
+});
+
 // @description     Update user profile
 // @route           PUT /api/users/profile
 // @access          Private
@@ -110,5 +118,6 @@ module.exports = {
     authuser,
     getUserProfile,
     registerUser,
-    updateUserProfile
+    updateUserProfile,
+    getUsers
 }

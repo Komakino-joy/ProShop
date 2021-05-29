@@ -35,6 +35,7 @@ const PlaceOrderPage = ({ history }) => {
     }, [history, success])
 
     const placeOrderHandler = () => {
+        console.log(cart)
         dispatch(createOrder({
             orderItems: cart.cartItems,
             shippingAddress: cart.shippingAddress,

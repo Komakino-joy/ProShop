@@ -7,6 +7,9 @@ const INITIAL_STATE_DETAILS = {
     shippingAddress: {},
 };
 const INITIAL_STATE_PAY = {};
+const INITIAL_STATE_ORDER_LIST_MY = {
+    orders: []
+};
 
 export const orderCreateReducer = (state = INITIAL_STATE_CREATE, action) => {
     switch(action.type) {
@@ -87,5 +90,29 @@ export const orderPayReducer = (state = INITIAL_STATE_PAY, action) => {
 
         default:
             return state
-    }
-}
+    };
+};
+
+export const orderListMyReducer = (state = INITIAL_STATE_ORDER_LIST_MY, action) => {
+    switch(action.type) {
+        case OrderActionTypes.ORDER_LIST_MY_REQUEST:
+            return{
+                loading: true
+            }
+
+        case OrderActionTypes.ORDER_LIST_MY_SUCCESS:
+            return {
+                loading: false,
+                orders: action.payload,
+            };
+        
+        case OrderActionTypes.ORDER_LIST_MY_FAILURE:
+            return {
+                loading: false,
+                error: action.payload
+            };
+
+        default:
+            return state
+    };
+};

@@ -16,6 +16,8 @@ import PaymentMethodPage from './pages/payment-method/payment-method.component';
 import PlaceOrderPage from './pages/place-order-page/place-order-page.component';
 import OrderPage from './pages/order-page/order-page.component';
 import UserListPage from './pages/user-list-page/user-list-page.component';
+import UserEditPage from './pages/user-edit-page/user-edit.component';
+import ProductListPage from './pages/product-list-page/product-list-page';
 
 const App = () => {
   return (
@@ -34,6 +36,8 @@ const App = () => {
           <Route path='/placeorder' component={PlaceOrderPage} />
           <Route path='/order/:id' component={OrderPage} />
           <Route path='/admin/userlist' component={UserListPage} />
+          <Route path='/admin/productlist' component={ProductListPage} />
+          <Route path='/admin/user/:id/edit' component={UserEditPage} />
         </Container>
         </main>
       <Footer/>

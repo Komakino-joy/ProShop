@@ -185,3 +185,64 @@ export const listUsers = () => async (dispatch ,getState) => {
         });
     };
 };
+
+export const deleteUser = (id) => async (dispatch ,getState) => {
+    try {
+        dispatch({
+            type: UserActionTypes.USER_DELETE_REQUEST
+        });
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+
+        await axios.delete( `/api/users/${id}`, config);
+
+        dispatch({type: UserActionTypes.USER_DELETE_SUCCESS,});
+
+    } catch (error) {
+        dispatch({
+            type: UserActionTypes.USER_DELETE_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message
+            : error.message,
+        });
+    };
+};
+
+export const updateUser = (user) => async (dispatch ,getState) => {
+    try {
+        dispatch({
+            type: UserActionTypes.USER_UPDATE_REQUEST
+        });
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+
+        const { data } = await axios.put( `/api/users/${user._id}`,user, config);
+
+        dispatch({type: UserActionTypes.USER_UPDATE_SUCCESS,});
+        dispatch({
+            type: UserActionTypes.USER_DETAILS_SUCCESS, 
+            payload: data
+        });
+
+    } catch (error) {
+        dispatch({
+            type: UserActionTypes.USER_UPDATE_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message
+            : error.message,
+        });
+    };
+};

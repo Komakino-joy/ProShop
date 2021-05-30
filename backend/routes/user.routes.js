@@ -8,5 +8,8 @@ router.post('/login', userController.authuser);
 router.route('/profile')
 .get(protect, userController.getUserProfile)
 .put(protect, userController.updateUserProfile);
+router.route('/:id').delete(protect, isAdmin, userController.deleteUser)
+.get(protect, isAdmin, userController.getUserById)
+.put(protect, isAdmin, userController.updateUser);
 
 module.exports = router;

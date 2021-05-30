@@ -1,40 +1,55 @@
 import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/message/message.component';
 import Loader from '../../components/loader/loader.component';
-import { listUsers, deleteUser } from '../../redux/user/user.actions';
+import { listProducts} from '../../redux/product/product.actions';
 
-const UserListPage = ({ history }) => {
+const ProductListPage = ({ history, match }) => {
     const dispatch = useDispatch();
 
-    const userList = useSelector(state => state.userList);
-    const { loading, error, users } = userList;
+    const productList = useSelector(state => state.productList);
+    const { loading, error, products } = productList;
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
-    const userDelete = useSelector(state => state.userDelete);
-    const { success: successDelete } = userDelete;
 
     useEffect(() => {
         if (userInfo && userInfo.isAdmin){
-            dispatch(listUsers());
+            dispatch(listProducts());
         } else {
             history.push('/login');
         }
-    }, [dispatch, history, userInfo, successDelete]);
+    }, [dispatch, history, userInfo]);
 
     const deleteHandler = (userId) => {
         if (window.confirm('Are you sure')){
-            dispatch(deleteUser(userId));
+            // delete products
         };
     };
 
+    const createProductHandler = (product) => {
+        console.log('create product')
+    }
+
     return (
         <>
-            <h1>Users</h1> 
+            <Row className='align-items-center'>
+                <Col>
+                    <h1>Products</h1>
+                </Col>
+                <Col className='text-end' >
+                    <Button
+                        className='my-3'
+                        onClick={createProductHandler}
+                    >
+                        <i className='fas fa-plus'/> 
+                         Create Product
+                    </Button>
+                </Col>
+            </Row>
             {
                 loading 
                 ? <Loader/> 
@@ -52,25 +67,21 @@ const UserListPage = ({ history }) => {
                             <tr>
                                 <th>ID</th>
                                 <th>NAME</th>
-                                <th>EMAIL</th>
-                                <th>ADMIN</th>
-                                <th></th>
+                                <th>PRICE</th>
+                                <th>CATEGORY</th>
+                                <th>BRAND</th>
                             </tr>
                         </thead>
                         <tbody>
-                            { users.map( user => (
-                                <tr key={user._id}>
-                                    <td>{user._id}</td>
-                                    <td>{user.name}</td>
-                                    <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
-                                    <td>{
-                                        user.isAdmin
-                                        ? (<i className='fas fa-check' style={{color:'green'}}/>)
-                                        : (<i className='fas fa-times' style={{color:'red'}}/>)
-                                        }
-                                    </td>
+                            { products.map( product => (
+                                <tr key={product._id}>
+                                    <td>{product._id}</td>
+                                    <td>{product.name}</td>
+                                    <td>${product.price}</td>
+                                    <td>{product.category}</td>
+                                    <td>{product.brand}</td>
                                     <td>
-                                        <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                                        <LinkContainer to={`/admin/product/${product._id}/edit`}>
                                             <Button variant='light' className='btn-sm'>
                                                 <i className='fas fa-edit'></i>
                                             </Button>
@@ -78,7 +89,7 @@ const UserListPage = ({ history }) => {
                                         <Button 
                                             variant='danger' 
                                             className='btn-sm'
-                                            onClick={() => deleteHandler(user._id)}
+                                            onClick={() => deleteHandler(product._id)}
                                         >
                                             <i className='fas fa-trash'/>
                                         </Button>
@@ -93,4 +104,4 @@ const UserListPage = ({ history }) => {
     );
 };
 
-export default UserListPage
+export default ProductListPage

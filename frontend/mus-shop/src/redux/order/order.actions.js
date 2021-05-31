@@ -103,6 +103,37 @@ export const payOrder = (orderId, paymentResult) => async (dispatch ,getState) =
     };
 };
 
+export const deliverOrder = (order) => async (dispatch ,getState) => {
+    try {
+        dispatch({
+            type: OrderActionTypes.ORDER_DELIVER_REQUEST
+        });
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+
+        const { data } = await axios.put(`/api/orders/${order._id}/deliver`, {}, config);
+
+        dispatch({
+            type: OrderActionTypes.ORDER_DELIVER_SUCCESS,
+            payload: data,
+        });
+
+    } catch (error) {
+        dispatch({
+            type: OrderActionTypes.ORDER_DELIVER_FAILURE,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message
+            : error.message,
+        });
+    };
+};
+
 export const listMyOrders = () => async (dispatch ,getState) => {
 
     try {
@@ -128,6 +159,38 @@ export const listMyOrders = () => async (dispatch ,getState) => {
     } catch (error) {
         dispatch({
             type: OrderActionTypes.ORDER_LIST_MY_FAILURE,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message
+            : error.message,
+        });
+    };
+};
+
+export const listOrders = () => async (dispatch ,getState) => {
+
+    try {
+        dispatch({
+            type: OrderActionTypes.ORDER_LIST_REQUEST
+        });
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+
+        const { data } = await axios.get(`/api/orders`, config);
+
+        dispatch({
+            type: OrderActionTypes.ORDER_LIST_SUCCESS,
+            payload: data,
+        });
+
+    } catch (error) {
+        dispatch({
+            type: OrderActionTypes.ORDER_LIST_FAILURE,
             payload: error.response && error.response.data.message 
             ? error.response.data.message
             : error.message,

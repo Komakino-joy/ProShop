@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
@@ -7,6 +8,7 @@ const connectDB = require('./config/db');
 const productRoutes = require('./routes/product.routes');
 const userRoutes = require('./routes/user.routes');
 const orderRoutes = require('./routes/order.routes');
+const uploadRoutes = require('./routes/upload.routes');
 
 dotenv.config();
 
@@ -25,10 +27,15 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/api/config/paypal', ((req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID)
 }));
+
+// ^Making a folder static so it can be used in the browser. 
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use("/uploads", express.static("uploads"))
 
 // return invalid route middleware
 app.use(errorMiddleware.notFound);

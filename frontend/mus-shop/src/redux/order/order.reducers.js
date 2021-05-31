@@ -7,9 +7,9 @@ const INITIAL_STATE_DETAILS = {
     shippingAddress: {},
 };
 const INITIAL_STATE_PAY = {};
-const INITIAL_STATE_ORDER_LIST_MY = {
-    orders: []
-};
+const INITIAL_STATE_ORDER_DELIVER = {};
+const INITIAL_STATE_ORDER_LIST_MY = {orders: []};
+const INITIAL_STATE_ORDER_LIST = {orders:[]};
 
 export const orderCreateReducer = (state = INITIAL_STATE_CREATE, action) => {
     switch(action.type) {
@@ -93,6 +93,34 @@ export const orderPayReducer = (state = INITIAL_STATE_PAY, action) => {
     };
 };
 
+
+export const orderDeliverReducer = (state = INITIAL_STATE_ORDER_DELIVER, action) => {
+    switch(action.type) {
+        case OrderActionTypes.ORDER_DELIVER_REQUEST:
+            return{
+                loading: true
+            }
+
+        case OrderActionTypes.ORDER_DELIVER_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            };
+        
+        case OrderActionTypes.ORDER_DELIVER_FAILURE:
+            return {
+                loading: false,
+                error: action.payload
+            };
+        
+        case OrderActionTypes.ORDER_DELIVER_RESET:
+            return {}
+
+        default:
+            return state
+    };
+};
+
 export const orderListMyReducer = (state = INITIAL_STATE_ORDER_LIST_MY, action) => {
     switch(action.type) {
         case OrderActionTypes.ORDER_LIST_MY_REQUEST:
@@ -116,6 +144,30 @@ export const orderListMyReducer = (state = INITIAL_STATE_ORDER_LIST_MY, action) 
             return {
                 ...state,
                 orders: []
+            };
+
+        default:
+            return state
+    };
+};
+
+export const orderListReducer = (state = INITIAL_STATE_ORDER_LIST, action) => {
+    switch(action.type) {
+        case OrderActionTypes.ORDER_LIST_REQUEST:
+            return{
+                loading: true
+            }
+
+        case OrderActionTypes.ORDER_LIST_SUCCESS:
+            return {
+                loading: false,
+                orders: action.payload,
+            };
+        
+        case OrderActionTypes.ORDER_LIST_FAILURE:
+            return {
+                loading: false,
+                error: action.payload
             };
 
         default:

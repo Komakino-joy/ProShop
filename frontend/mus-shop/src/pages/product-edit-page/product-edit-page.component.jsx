@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/message/message.component';
@@ -23,6 +24,7 @@ const ProductEditPage = ({ match, history }) => {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [countInStock, setCountInStock] = useState(0);
+    const [uploading, setUploading] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -57,6 +59,29 @@ const ProductEditPage = ({ match, history }) => {
         }
 
     }, [dispatch, history, product, productId, successUpdate])
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0]
+        const formData = new FormData();
+        formData.append('image', file)
+        setUploading(true);
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            };
+            
+            const { data } = await axios.post('/api/upload', formData, config);
+
+            setImage(data);
+            setUploading(false);
+        } catch (error) {
+            console.error(error);
+            setUploading(false);
+        };
+    };
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -117,6 +142,16 @@ const ProductEditPage = ({ match, history }) => {
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
                     ></Form.Control>
+                    <Form.File 
+                        id='custom-file' 
+                        label='Choose File'
+                        type='file'
+                        className="custom-file-label"
+                        custom={true}
+                        onChange={uploadFileHandler}
+                    >
+                        {uploading && <Loader />}
+                    </Form.File>
                 </Form.Group>
 
                 <Form.Group controlId='brand'>

@@ -11,6 +11,10 @@ const PRODUCT_DETAILS_INITIAL_STATE = {
     error: null
 };
 
+const PRODUCT_DELETE_INITIAL_STATE = {};
+const PRODUCT_CREATE_INITIAL_STATE = {};
+const PRODUCT_UPDATE_INITIAL_STATE = { product:{} };
+
 export const productListReducer = (state = PRODUCT_LIST_INITIAL_STATE, action) => {
     switch(action.type) {
         case ProductActionTypes.PRODUCT_LIST_REQUEST:
@@ -46,16 +50,99 @@ export const productDetailsReducer = (state = PRODUCT_DETAILS_INITIAL_STATE, act
             }
         case ProductActionTypes.PRODUCT_DETAILS_SUCCESS:
             return{
-                ...state,
                 loading:false,
                 product: action.payload
             }
-        case ProductActionTypes.PRODUCT_DETAILS_FAILURE:
+        case ProductActionTypes.PRODUCT_DETAILS_FAILURE: 
+            return { 
+                loading: false, 
+                error: action.payload }
+
+        case ProductActionTypes.PRODUCT_DETAILS_RESET:
+            return { product: { reviews: [] } }
+        default:
+            return state;
+    };
+};
+
+export const productDeleteReducer = (state = PRODUCT_DELETE_INITIAL_STATE, action) => {
+    switch(action.type) {
+        case ProductActionTypes.PRODUCT_DELETE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case ProductActionTypes.PRODUCT_DELETE_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                success: true,
+            }
+        case ProductActionTypes.PRODUCT_DELETE_FAILURE:
             return {
                 ...state,
                 loading: false,
                 error: action.payload,
             }
+        default:
+            return state;
+    };
+};
+
+export const productCreateReducer = (state = PRODUCT_CREATE_INITIAL_STATE, action) => {
+    switch(action.type) {
+
+        case ProductActionTypes.PRODUCT_CREATE_REQUEST:
+            return {
+                loading: true,
+            };
+
+        case ProductActionTypes.PRODUCT_CREATE_SUCCESS:
+            return{
+                loading:false,
+                success: true,
+                product: action.payload,
+            };
+
+        case ProductActionTypes.PRODUCT_CREATE_FAILURE:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+
+        case ProductActionTypes.PRODUCT_CREATE_RESET:
+            return {};
+
+        default:
+            return state;
+    };
+};
+
+
+export const productUpdateReducer = (state = PRODUCT_UPDATE_INITIAL_STATE, action) => {
+    switch(action.type) {
+
+        case ProductActionTypes.PRODUCT_UPDATE_REQUEST:
+            return {
+                loading: true,
+            };
+
+        case ProductActionTypes.PRODUCT_UPDATE_SUCCESS:
+            return{
+                loading: false,
+                success: true,
+                product: action.payload,
+            };
+
+        case ProductActionTypes.PRODUCT_UPDATE_FAILURE:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+
+        case ProductActionTypes.PRODUCT_UPDATE_RESET:
+            return { product:{} };
+
         default:
             return state;
     };

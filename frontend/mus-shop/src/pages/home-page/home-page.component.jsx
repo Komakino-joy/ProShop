@@ -6,36 +6,51 @@ import { listProducts } from '../../redux/product/product.actions'
 
 import Product from '../../components/product/product.component';
 import Loader from '../../components/loader/loader.component';
+import Paginate from '../../components/paginate/paginate.component';
 import Message from '../../components/message/message.component';
+import ProductCarousel from '../../components/product-carousel/product-carousel.compenent';
 
-const HomePage = () => {
+const HomePage = ({ match }) => {
+    const keyword = match.params.keyword;
+
+    const pageNumber = match.params.pageNumber || 1
+
     const dispatch = useDispatch();
+
     const productList = useSelector(state => state.productList)
-    const { loading, error, products} = productList
+    const { loading, error, products, page, pages} = productList
 
     useEffect(() => {
-       dispatch(listProducts())
-    }, [dispatch]);
+       dispatch(listProducts(keyword, pageNumber));
+    }, [dispatch, keyword, pageNumber]);
 
     return (
         <>
+            {!keyword && <ProductCarousel /> }
             <h1>Latest Products</h1>
             {loading ? <Loader>Loading...</Loader> : error ? <Message variant='danger'>{error}</Message> :
-            <Row>
-                {
-                    products.map((product) => (
-                        <Col 
-                        key={product._id} 
-                        className='align-items-stretch d-flex'
-                        sm={12} 
-                        md={6} 
-                        lg={4} 
-                        xl={3}>
-                            <Product product={product}/>
-                        </Col>
-                    ))
-                };
-            </Row>
+            <>
+                <Row>
+                    {
+                        products.map((product) => (
+                            <Col 
+                            key={product._id} 
+                            className='align-items-stretch d-flex'
+                            sm={12} 
+                            md={6} 
+                            lg={4} 
+                            xl={3}>
+                                <Product product={product}/>
+                            </Col>
+                        ))
+                    };
+                </Row>
+                <Paginate
+                    pages={pages}
+                    page={page}
+                    keyword={keyword ? keyword : ''}
+                />
+            </>
             }
         </>
     );

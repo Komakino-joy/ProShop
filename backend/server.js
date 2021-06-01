@@ -1,5 +1,5 @@
-const path = require('path');
 const express = require('express');
+const morgan = require('morgan');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const errorMiddleware = require('./middleware/error.middleware');
@@ -15,6 +15,11 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+};
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 5010

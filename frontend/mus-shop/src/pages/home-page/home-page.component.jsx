@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
@@ -9,6 +10,7 @@ import Loader from '../../components/loader/loader.component';
 import Paginate from '../../components/paginate/paginate.component';
 import Message from '../../components/message/message.component';
 import ProductCarousel from '../../components/product-carousel/product-carousel.compenent';
+import Meta from '../../components/meta/meta.component';
 
 const HomePage = ({ match }) => {
     const keyword = match.params.keyword;
@@ -26,7 +28,8 @@ const HomePage = ({ match }) => {
 
     return (
         <>
-            {!keyword && <ProductCarousel /> }
+            <Meta title='Hellow World'/>
+            {!keyword ? <ProductCarousel /> : <Link to='/' className='btn btn-light'>Go Back</Link> }
             <h1>Latest Products</h1>
             {loading ? <Loader>Loading...</Loader> : error ? <Message variant='danger'>{error}</Message> :
             <>

@@ -6,6 +6,7 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../../components/rating/rating.component';
 import Loader from '../../components/loader/loader.component';
 import Message from '../../components/message/message.component';
+import Meta from '../../components/meta/meta.component';
 
 import { listProductDetails, createProductReview } from '../../redux/product/product.actions';
 import ProductActionTypes from '../../redux/product/product.types';
@@ -63,6 +64,7 @@ const ProductPage = ({ match, history }) => {
             :
             (
             <>
+                <Meta title={product.name}/>
                 <Row>
                     <Col md={6}>
                         <Image src={product.image} alt={product.name} fluid/>

@@ -10,7 +10,7 @@
 /coverage
 
 # production
-/build
+/frontend/mus-shop/build
 
 # misc
 .DS_Store

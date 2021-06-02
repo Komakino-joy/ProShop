@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const colors = require('colors');
@@ -15,19 +16,25 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const PORT = process.env.PORT || 5010
+app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
+
+    app.get('/', (req, res) => {
+        res.send('API is running');
+    });    
 };
 
-app.use(express.json());
 
-const PORT = process.env.PORT || 5010
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '..', 'frontend', 'mus-shop', 'build')));
 
-
-app.get('/', (req, res) => {
-    res.send('API is running');
-});
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname, '..', 'frontend', 'mus-shop', 'build' , 'index.html'))
+    });
+};
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
@@ -39,14 +46,12 @@ app.get('/api/config/paypal', ((req, res) => {
 }));
 
 // ^Making a folder static so it can be used in the browser. 
-// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-app.use("/uploads", express.static("uploads"))
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 // return invalid route middleware
 app.use(errorMiddleware.notFound);
 
 // Error middleware
 app.use(errorMiddleware.errorhandler);
-
 
 app.listen(PORT, console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));

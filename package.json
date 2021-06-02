@@ -4,11 +4,13 @@
   "description": "mus shop",
   "main": "index.js",
   "scripts": {
+    "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend/mus-shop",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
-    "data:destroy": "node backend/seeder -d"
+    "data:destroy": "node backend/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend/mus-shop && npm run build --prefix frontend/mus-shop"
   },
   "repository": {
     "type": "git",
